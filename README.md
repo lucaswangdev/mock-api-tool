@@ -25,9 +25,7 @@ type:get/post/put/delete...
 path:/test/ddd
 content:xxx
 ```
-![image-20200611010755331](https://tva1.sinaimg.cn/large/007S8ZIlly1gfnoxdvqa9j30o108t3z5.jpg)
-
-
+![koa-mock-image](./static/images/koa-mock-image.jpeg)
 
 #### GET
 ```js

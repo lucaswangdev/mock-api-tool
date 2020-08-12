@@ -7,16 +7,16 @@ const fs = require('fs')
 const staticJsonPath = './static/api'
 const router = new Router();
 const app = new Koa();
-router.prefix('/api');
+// router.prefix('/api');
 // 服务启动的端口号
 const port = '';
 
-router.get('/users/userId', async(ctx) => {
+router.get('/todos/userId.json', async(ctx) => {
   ctx.response.type = 'json'
   ctx.response.body = await fs.createReadStream(staticJsonPath + '/users/userId.json')
 })
 
-router.post('/users/userId2', async(ctx) => {
+router.post('/users/userId2.json', async(ctx) => {
   ctx.response.type = 'json'
   ctx.response.body = await fs.createReadStream(staticJsonPath + '/users/userId2.json')
 })

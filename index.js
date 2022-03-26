@@ -1,35 +1,21 @@
-'use strict'
+"use strict";
 
-const Koa = require('koa');
-const Router = require('koa-router');
-const cors = require('@koa/cors');
-const fs = require('fs')
-const staticJsonPath = './static/api'
+const Koa = require("koa");
+const Router = require("koa-router");
+const bodyParser = require("koa-bodyparser");
+const cors = require("@koa/cors");
+const sleep = require("koa-sleep");
 const router = new Router();
 const app = new Koa();
-// router.prefix('/api');
+
+// 路由前缀
+router.prefix('/api');
 // 服务启动的端口号
-const port = '';
+const port = 4000;
+app.use(bodyParser());
+// 休眠
+// app.use(sleep(3000))
 
-router.get('/todos/userId.json', async(ctx) => {
-  ctx.response.type = 'json'
-  ctx.response.body = await fs.createReadStream(staticJsonPath + '/users/userId.json')
-})
-
-router.post('/users/userId2.json', async(ctx) => {
-  ctx.response.type = 'json'
-  ctx.response.body = await fs.createReadStream(staticJsonPath + '/users/userId2.json')
-})
-
-router.put('/users/userId3', async(ctx) => {
-  ctx.response.type = 'json'
-  ctx.response.body = await fs.createReadStream(staticJsonPath + '/users/userId3.json')
-})
-
-router.delete('/users/userId4', async(ctx) => {
-  ctx.response.type = 'json'
-  ctx.response.body = await fs.createReadStream(staticJsonPath + '/users/userId4.json')
-})
 app
   .use(cors())
   .use(router.routes())
@@ -37,6 +23,39 @@ app
   .listen(port || 4000);
 console.log(`http://localhost:${port || 4000}/api/users/userId`);
 //----------------------------------------------------------------
-// 下面开始为新增的接口
 
-  
+router.get("/users/userId", async (ctx) => {
+  ctx.response.type = "json";
+  ctx.response.body = {
+    name: "get",
+  };
+});
+
+router.post("/users/userId2", async (ctx) => {
+  ctx.response.type = "json";
+  // 请求体参数
+  const resBody = ctx.request.body;
+  console.log("resBody===>", resBody);
+  ctx.response.body = {
+    name: "post",
+  };
+});
+
+router.put("/users/userId3", async (ctx) => {
+  ctx.response.type = "json";
+  ctx.response.body = {
+    name: "put",
+  };
+});
+
+router.delete("/users/userId4", async (ctx) => {
+  ctx.response.type = "json";
+  ctx.response.body = {
+    name: "delete",
+  };
+});
+
+//--------------新增的接口(开始)-----------------//
+
+
+//--------------新增的接口(结束)-----------------//

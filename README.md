@@ -8,59 +8,47 @@ npm install
 
 # 启动mock数据接口
 npm run start
-
-# 启动新增接口服务(在另一个Tab栏)
-npm run add
 ```
-
-### 手动新增接口(只需2步)
-- 准备好json文件，放在对应的路径下。
-- 新增相应请求类型的路由。
-
-### 自动新增接口
-```
-请求类型：POST
-请求参数：
-type:get/post/put/delete...
-path:/test/ddd
-content:xxx
-```
-![koa-mock-image](./static/images/koa-mock-image.jpeg)
 
 #### GET
 ```js
-router.get('/users/userId', async(ctx) => {
-  ctx.response.type = 'json'
-  ctx.response.body = await fs.createReadStream(staticJsonPath + '/users/userId.json')
-})
+router.get("/users/userId", async (ctx) => {
+  ctx.response.type = "json";
+  ctx.response.body = {
+    name: "get",
+  };
+});
 ```
 #### POST
 ```js
-router.post('/users/userId2', async(ctx) => {
-  ctx.response.type = 'json'
-  ctx.response.body = await fs.createReadStream(staticJsonPath + '/users/userId2.json')
-})
+router.post("/users/userId2", async (ctx) => {
+  ctx.response.type = "json";
+  // 请求体参数
+  const resBody = ctx.request.body;
+  console.log("resBody===>", resBody);
+  ctx.response.body = {
+    name: "post",
+  };
+});
 ```
 
 #### PUT
 ```js
-router.put('/users/userId3', async(ctx) => {
-  ctx.response.type = 'json'
-  ctx.response.body = await fs.createReadStream(staticJsonPath + '/users/userId3.json')
-})
+router.put("/users/userId3", async (ctx) => {
+  ctx.response.type = "json";
+  ctx.response.body = {
+    name: "put",
+  };
+});
 ```
 
 #### POST
 ```js
-router.delete('/users/userId4', async(ctx) => {
-  ctx.response.type = 'json'
-  ctx.response.body = await fs.createReadStream(staticJsonPath + '/users/userId4.json')
-})
+router.delete("/users/userId4", async (ctx) => {
+  ctx.response.type = "json";
+  ctx.response.body = {
+    name: "delete",
+  };
+});
 ```
-
-### 其他
-
-如果出错了，请删除根目录下相对应的路由，重新发起请求，添加接口。
-
-检查根目录下的index.js文件。
 

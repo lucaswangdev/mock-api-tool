@@ -1,4 +1,4 @@
-# koa-mock
+# koa-mock(v1版本)
 
 ### 使用
 
@@ -52,3 +52,29 @@ router.delete("/users/userId4", async (ctx) => {
 });
 ```
 
+
+
+
+
+---
+
+
+
+# koa-mock(v2版本)
+
+### 使用
+```
+# 安装依赖
+npm install
+
+# 启动mock数据接口
+npm run start:v2
+```
+
+
+
+### 通过 /add 接口 往api_list表添加数据
+
+![add_data_postman](src/v2/add_data_postman.png)
+
+![](src/v2/add_sql_data.png)

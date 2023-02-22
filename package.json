@@ -1,5 +1,5 @@
 {
-  "name": "koa-mock",
+  "name": "mock-api-tool",
   "version": "1.0.1",
   "description": "mock",
   "main": "index.js",

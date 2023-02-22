@@ -1,4 +1,4 @@
-# koa-mock(v1版本)
+# mock-api-tool(v1版本)
 
 ### 使用
 
@@ -60,7 +60,7 @@ router.delete("/users/userId4", async (ctx) => {
 
 
 
-# koa-mock(v2版本)
+# mock-api-tool(v2版本)
 
 ### 使用
 ```

@@ -4,7 +4,22 @@ old-versions/v2/node_modules
 mock-api-tool-backend/node_modules
 mock-api-tool-frontend/node_modules
 
+.idea
 .vscode
 *.DS_Store
 old-versions/**/*.DS_Store
 mock-api-tool-backend/**/*.DS_Store
+
+
+mock-api-tool-frontend/.vercel
+mock-api-tool-frontend/node_modules
+mock-api-tool-frontend/.env.local
+mock-api-tool-frontend/.umirc.local.ts
+mock-api-tool-frontend/config/config.local.ts
+mock-api-tool-frontend/src/.umi
+mock-api-tool-frontend/src/.umi-production
+mock-api-tool-frontend/.umi
+mock-api-tool-frontend/.umi-production
+mock-api-tool-frontend/.umi-test
+mock-api-tool-frontend/dist
+mock-api-tool-frontend/.mfsu

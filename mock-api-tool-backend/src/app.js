@@ -25,6 +25,7 @@ router.post("/insert", MockController.insert);
 router.post("/update", MockController.update);
 router.post("/findById", MockController.findById);
 router.post("/deleteApi", MockController.deleteApi);
+router.post("/findAll", MockController.findAll);
 
 /**
  * 数据库中保存的 mock 接口 数据

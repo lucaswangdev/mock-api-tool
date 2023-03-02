@@ -14,4 +14,7 @@ module.exports = {
   findByApiPath: `
     select id, api_path, api_content, delay, create_time, update_time from api_list where api_path = #data.api_path
     `,
+  findAll: `
+    select id, api_path, api_content, delay, create_time, update_time from api_list
+    `,
 };

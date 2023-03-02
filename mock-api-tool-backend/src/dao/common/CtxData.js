@@ -106,6 +106,32 @@ class CtxData{
     await this.connection.release();
     this.connected = false ;
   }
+
+  /**
+   * 返回分页数据
+   * @param {} pageNum 
+   * @param {*} pageSize 
+   * @param {*} apiContentList 
+   * @returns 
+   */
+  handlePages = (pageNum, pageSize, apiContentList) => {
+    let total = apiContentList.length;
+    let startRow = total > 0 ? ((pageNum - 1) * pageSize + 1) : 0;
+    let endRow = pageNum * pageSize <= total ? pageNum * pageSize : total;
+    return {
+      success: true,
+      errorMsg: "",
+      errorCode: "",
+      data: {
+        pageNum,
+        pageSize,
+        recordCounts: total,
+        startRow,
+        endRow,
+        tableData: apiContentList.slice((pageNum - 1) * pageSize, pageNum * pageSize)
+      }
+    }
+  }
 }
 
 module.exports = CtxData;

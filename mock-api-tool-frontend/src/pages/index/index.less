@@ -1,0 +1,55 @@
+.ant-page-header-heading-extra .ant-space {
+  margin-left: 0 !important;
+}
+
+.index-page {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+
+  // 左侧列表
+  .left-list {
+    width: 300px;
+    min-width: 300px;
+    height: 100vh;
+    overflow-y: scroll;
+    background-color: #fff;
+
+    // border-right: 1px solid #104fa0;
+
+
+
+    .api-item {
+      margin-bottom: 10px;
+      background-color: #aeb9cf;
+      cursor: pointer;
+
+      .api-name {
+        color: #3a0ecb;
+      }
+      .api-desc {
+        color: #333;
+      }
+    }
+
+  }
+    
+  // 右侧内容
+  .right-detail {
+    width: 100%;
+    // 顶部按钮
+    .top-header {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 10px; 
+  
+      .button-wrapper {
+        margin-left: 10px;
+      }
+    }
+    // 内容区
+    .code-edit {
+      // width: 100%;
+    }
+  }
+}

@@ -80,10 +80,27 @@ const findByApiPath = async (ctxData, params) => {
   }
 };
 
+/**
+ * findAll
+ */
+const findAll = async (ctxData, params) => {
+  try {
+    const statement = ctxData.outputSQL(MockMapper.findAll, params);
+    const connection = ctxData.getConnection();
+    const [result, columnFields] = await connection.query(statement);
+    return ctxData.camelizeKeys(result);
+  } catch (e) {
+    // Logger.error(e.stack);
+    console.error(e.stack);
+    throw e;
+  }
+};
+
 module.exports = {
   insert,
   update,
   findById,
   deleteApi,
-  findByApiPath
+  findByApiPath,
+  findAll,
 };

@@ -1,0 +1,23 @@
+{
+  "name": "mock-api-tool",
+  "version": "3.0.1",
+  "description": "mock",
+  "scripts": {
+    "start": "nodemon src/app.js"
+  },
+  "author": "lucaswangdev",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
+  "dependencies": {
+    "@koa/cors": "^3.1.0",
+    "koa": "^2.12.0",
+    "koa-body": "^4.1.3",
+    "koa-bodyparser": "^4.3.0",
+    "koa-router": "^9.0.1",
+    "koa-sleep": "^0.1.0",
+    "lodash": "^4.17.21",
+    "mysql2": "^2.3.3"
+  }
+}

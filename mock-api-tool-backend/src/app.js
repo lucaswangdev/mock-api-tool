@@ -7,8 +7,9 @@ const cors = require("@koa/cors");
 const router = new Router();
 const app = new Koa();
 const config = require("./config/index");
+// 路由前缀
+// router.prefix('/api');
 
-const UserController = require('./controller/UserController');
 const MockController = require('./controller/MockController');
 
 app.use(bodyParser());
@@ -24,8 +25,6 @@ router.post("/insert", MockController.insert);
 router.post("/update", MockController.update);
 router.post("/findById", MockController.findById);
 router.post("/deleteApi", MockController.deleteApi);
-
-router.post("/userQuery", UserController.userQuery);
 
 /**
  * 数据库中保存的 mock 接口 数据

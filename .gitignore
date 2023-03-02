@@ -1,1 +1,10 @@
-/node_modules
+old-versions/v1/node_modules
+old-versions/v2/node_modules
+
+mock-api-tool-backend/node_modules
+mock-api-tool-frontend/node_modules
+
+.vscode
+*.DS_Store
+old-versions/**/*.DS_Store
+mock-api-tool-backend/**/*.DS_Store

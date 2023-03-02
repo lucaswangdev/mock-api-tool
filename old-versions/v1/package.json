@@ -4,9 +4,7 @@
   "description": "mock",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/v1/index.js",
-    "start:v2": "nodemon src/v2/index.js",
-    "start:v3": "nodemon src/app.js"
+    "start": "nodemon src/index.js"
   },
   "author": "lucaswangdev",
   "license": "ISC",

@@ -9,7 +9,7 @@
   "author": "lucaswangdev",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.20"
   },
   "dependencies": {
     "@koa/cors": "^3.1.0",

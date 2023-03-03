@@ -6,29 +6,74 @@
   display: flex;
   justify-content: flex-start;
   width: 100%;
+  background: rgba(248 249 250);
 
   // 左侧列表
   .left-list {
-    width: 300px;
+    margin: 10px 10px 0 0;
+    width: 500px;
     min-width: 300px;
-    height: 100vh;
+    max-height: 1800;
     overflow-y: scroll;
-    background-color: #fff;
 
-    // border-right: 1px solid #104fa0;
-
-
-
+    // item 正常
     .api-item {
-      margin-bottom: 10px;
-      background-color: #aeb9cf;
-      cursor: pointer;
+      margin-bottom: 8px;
+      border-bottom: 1px solid #ccc;
 
-      .api-name {
-        color: #3a0ecb;
+      .item-wrapper {
+        display: inline-flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+
+        .left-wrapper {
+          cursor: pointer;
+
+          .api-name {
+            color: #111;
+            font-size: 16px;
+          }
+          .api-desc {
+            color: #333;
+          }
+        }
+        .right-wrapper {
+          .button-wrapper {
+            margin-left: 5px;
+          }
+        }
       }
-      .api-desc {
-        color: #333;
+ 
+    }
+
+    // item 激活
+    .api-item-hover {
+      margin-bottom: 8px;
+      border-bottom: 1px solid #ccc;
+      background: #1a90ff;
+      
+      .item-wrapper {
+        display: inline-flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+
+        .left-wrapper {
+          cursor: pointer;
+          .api-name {
+            color: #111;
+            font-size: 16px;
+          }
+          .api-desc {
+            color: #333;
+          }
+        }
+        .right-wrapper {
+          .button-wrapper {
+            margin-left: 5px;
+          }
+        }
       }
     }
 
@@ -37,10 +82,11 @@
   // 右侧内容
   .right-detail {
     width: 100%;
+    height: 100vh;
     // 顶部按钮
     .top-header {
       display: flex;
-      justify-content: flex-end;
+      justify-content: flex-start;
       margin-bottom: 10px; 
   
       .button-wrapper {

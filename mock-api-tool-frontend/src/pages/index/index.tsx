@@ -1,11 +1,9 @@
-import { findAll, update } from '@/services/mockService';
-import { PageContainer } from '@ant-design/pro-components';
 import CodeEditor from '@/components/CodeEditor';
+import { mockApiBasePath } from '@/configs/routes';
+import { findAll, update, deleteApi } from '@/services/mockService';
+import { PageContainer } from '@ant-design/pro-components';
 
-import {
-  Button,
-  message,
-} from 'antd';
+import { Button, Card, Form, Input, message } from 'antd';
 import React, { useEffect, useState } from 'react';
 import './index.less';
 
@@ -17,6 +15,7 @@ const IndexPage: React.FC = () => {
   const [currentApiItem, setCurrentApiItem] = useState<any>({});
   const [currentEditCode, setcurrentEditCode] = useState<any>('');
   const [editorActionList, setEditorActionList] = useState<any>([]);
+  const [form] = Form.useForm();
 
   /**
    * 获取api数据列表data
@@ -24,7 +23,7 @@ const IndexPage: React.FC = () => {
   const getApiList = async () => {
     try {
       const res = await findAll({});
-      setApiList(res.data)
+      setApiList(res.data);
     } catch (e: any) {
       message.error('获取api数据列表失败:' + e.message);
     }
@@ -37,7 +36,7 @@ const IndexPage: React.FC = () => {
     try {
       await update({
         id: currentApiItem.id,
-        apiContent: currentEditCode
+        apiContent: currentEditCode,
       });
       getApiList();
       message.success('保存成功');
@@ -53,73 +52,135 @@ const IndexPage: React.FC = () => {
 
   /**
    * 选中api Click
-   * @param item 
+   * @param item
    */
   const currentApiItemClick = (item: any) => {
     setCurrentApiItem(item);
-    setcurrentEditCode(item.apiContent || '')
-  }
+    setcurrentEditCode(item.apiContent || '');
+    form.setFieldsValue({
+      apiPath: item.apiPath || ''
+    });
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    editorActionList['editor.action.formatDocument'] &&
+      editorActionList['editor.action.formatDocument']._run();
+  };
 
   /**
    * 编辑器内容发送了变化
    */
   const onCodeChange = (value: string) => {
-    setcurrentEditCode(value || '')
-  }
+    setcurrentEditCode(value || '');
+  };
 
   /**
    * 获取 editorActionList
-   * @param actionList 
+   * @param actionList
    */
   const editorDidMountCallbackClick = (actionList: any) => {
     setEditorActionList(actionList);
-  }
+  };
 
   /**
    * JSON格式化
    */
   const formatJSON = () => {
-    editorActionList['editor.action.formatDocument'] && editorActionList['editor.action.formatDocument']._run();
-  }
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    editorActionList['editor.action.formatDocument'] &&
+      editorActionList['editor.action.formatDocument']._run();
+  };
 
   /**
    * 保存
    */
   const saveJSON = () => {
     saveApiData();
+  };
+
+  const itemOperationClick = async (type='', item: any) => {
+    if(type === 'view'){
+      // 查看
+      window.open(`${mockApiBasePath}/${item.apiPath}`, '_blank');
+    } else if(type ==='delete'){
+      // 删除
+      try {
+        await deleteApi({
+          id: item.id,
+        });
+        getApiList();
+        message.success('删除成功');
+      } catch (e: any) {
+        message.error('删除失败:' + e.message);
+      }
+    }
   }
 
   return (
-    <div id="indexPage">
-      <PageContainer
-        title={
-          <>
-            快速生成 Mock 接口数据，大幅提高开发效率！
-          </>
-        }
-      >
-        <div className='index-page'>
-          <div className='left-list'>
-            {
-              apiList.map((item: any) => {
-                return <div className='api-item' key={item.id} onClick={() => currentApiItemClick(item)}>
-                <div className='api-name'>
-                  {item.apiPath}
-                </div>
-                <div className='api-desc'>
-                  {item.apiPath}描述
-                </div>
-              </div>
-              })
-            }
+    <div>
+      <PageContainer title={<>快速生成 Mock 接口数据，大幅提高开发效率！</>}>
+        <div className="index-page">
+          <div className="left-list">
+            <Card>
+              {apiList.map((item: any) => {
+                return (
+                  <div
+                    className={
+                      currentApiItem.id === item.id
+                        ? 'api-item-hover'
+                        : 'api-item'
+                    }
+                    key={item.id}
+                  >
+                    <div className='item-wrapper'>
+                      <div className='left-wrapper' onClick={() => currentApiItemClick(item)}>
+                        <div className="api-name">{item.apiPath}</div>
+                        <div className="api-desc">{item.apiPath}说明</div>                    
+                      </div>
+                      <div className='right-wrapper'>
+                        <Button size='small' onClick={() => itemOperationClick('view', item)}>查看</Button>
+                        <Button className='button-wrapper' type='primary' danger size='small' onClick={() => itemOperationClick('delete', item)}>删除</Button>
+                      </div>
+                    </div>
+
+                  </div>
+                );
+              })}
+            </Card>
           </div>
-          <div className='right-detail'>
-            <div className='top-header'>
-              <Button type='primary' onClick={formatJSON}>JSON 格式化</Button>
-              <Button className='button-wrapper' type='primary' onClick={saveJSON}>保存</Button>
+          <div className="right-detail">
+            <div>
+              <Form<any> className="form-input" form={form} scrollToFirstError>
+                <Form.Item
+                  name="apiPath"
+                  label="接口地址"
+                  // rules={[{ required: true }]}
+                >
+                  <Input placeholder="请输入接口地址" disabled/>
+                </Form.Item>
+                <Form.Item name="apiDesc" label="接口说明">
+                  <Input placeholder="请输入接口说明" disabled/>
+                </Form.Item>
+              </Form>
             </div>
-            <div className='code-edit'>
-              <CodeEditor value={currentEditCode} language="json" onChange={(value) => onCodeChange(value)} editorDidMountCallback={editorDidMountCallbackClick}/>
+            <div className="top-header">
+              <Button type="primary" onClick={formatJSON}>
+                JSON 格式化
+              </Button>
+              <Button
+                className="button-wrapper"
+                type="primary"
+                onClick={saveJSON}
+              >
+                保存
+              </Button>
+            </div>
+            <div className="code-edit">
+              <CodeEditor
+                value={currentEditCode}
+                language="json"
+                onChange={(value) => onCodeChange(value)}
+                editorDidMountCallback={editorDidMountCallbackClick}
+              />
             </div>
           </div>
         </div>

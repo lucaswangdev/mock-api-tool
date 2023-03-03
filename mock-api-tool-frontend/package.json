@@ -2,7 +2,7 @@
   "name": "mock-api-tool-frontend",
   "author": "lucaswangdev",
   "scripts": {
-    "dev": "max dev --PORT=8001",
+    "dev": "max dev",
     "build": "max build",
     "format": "prettier --cache --write .",
     "postinstall": "max setup",

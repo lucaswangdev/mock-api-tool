@@ -4,11 +4,19 @@
  */
 export default [
   {
-    name: '编辑接口',
+    name: '接口列表',
     path: '/',
     component: 'index',
   },
+  {
+    name: '增加接口',
+    path: '/add',
+    component: 'add',
+  },
 ];
+
+// 查看mock接口 basePath
+export const mockApiBasePath = "http://localhost:4000/mock";
 
 // e.g.
 // export const routes: IBestAFSRoute[] = [

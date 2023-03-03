@@ -12,7 +12,7 @@ interface Props {
  * 代码编辑器
  */
 const CodeEditor: React.FC<Props> = (props) => {
-  const { value, height = 480, language = 'sql', onChange, editorDidMountCallback } = props;
+  const { value, height = 500, language = 'sql', onChange, editorDidMountCallback } = props;
   
   const options = {
     selectOnLineNumbers: true,

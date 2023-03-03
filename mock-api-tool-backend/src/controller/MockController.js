@@ -12,9 +12,9 @@ const insert = async (_ctx) => {
   const resBody = ctx.request.body;
   console.log("resBody===>", resBody);
   const data = {
-    api_path: resBody.api_path,
-    api_content: resBody.api_content
-      ? JSON.stringify(resBody.api_content)
+    api_path: resBody.apiPath,
+    api_content: resBody.apiContent
+      ? resBody.apiContent
       : "{}",
   };
   try {

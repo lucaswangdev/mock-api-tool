@@ -25,7 +25,7 @@ declare namespace MockType {
    * 更新请求
    */
   interface MockUpdateRequest {
-    id: number;
+    id?: number;
     apiPath?: string;
     apiContent?: string;
     delay?: number;

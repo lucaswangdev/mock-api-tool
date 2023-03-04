@@ -3,7 +3,7 @@ import { mockApiBasePath } from '@/configs/routes';
 import { findAll, update, deleteApi } from '@/services/mockService';
 import { PageContainer } from '@ant-design/pro-components';
 
-import { Button, Card, Form, Input, message } from 'antd';
+import { Button, Card, Form, Input, message, Radio } from 'antd';
 import React, { useEffect, useState } from 'react';
 import './index.less';
 
@@ -34,9 +34,17 @@ const IndexPage: React.FC = () => {
    */
   const saveApiData = async () => {
     try {
+      const delay = form.getFieldsValue().delay || 0;
+      const apiPath = form.getFieldsValue().apiPath;
+      if (!apiPath || apiPath.length < 1) {
+        message.error('接口地址不能为空');
+        return;
+      }
       await update({
         id: currentApiItem.id,
         apiContent: currentEditCode,
+        apiPath,
+        delay,
       });
       getApiList();
       message.success('保存成功');
@@ -58,7 +66,8 @@ const IndexPage: React.FC = () => {
     setCurrentApiItem(item);
     setcurrentEditCode(item.apiContent || '');
     form.setFieldsValue({
-      apiPath: item.apiPath || ''
+      apiPath: item.apiPath || '',
+      delay: item.delay || 0
     });
 
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
@@ -153,12 +162,24 @@ const IndexPage: React.FC = () => {
                 <Form.Item
                   name="apiPath"
                   label="接口地址"
-                  // rules={[{ required: true }]}
+                  rules={[{ required: true }]}
                 >
-                  <Input placeholder="请输入接口地址" disabled/>
+                  <Input placeholder="请输入接口地址"/>
+                </Form.Item>
+                <Form.Item label="请求方式">
+                  ALL（支持所有请求方式）
                 </Form.Item>
                 <Form.Item name="apiDesc" label="接口说明">
                   <Input placeholder="请输入接口说明" disabled/>
+                </Form.Item>
+                <Form.Item name="delay" label="请求延时">
+                  <Radio.Group>
+                    <Radio value={0}>0秒</Radio>
+                    <Radio value={1}>1秒</Radio>
+                    <Radio value={2}>2秒</Radio>
+                    <Radio value={3}>3秒</Radio>
+                    <Radio value={4}>4秒</Radio>
+                  </Radio.Group>                
                 </Form.Item>
               </Form>
             </div>

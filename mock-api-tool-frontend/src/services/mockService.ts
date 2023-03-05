@@ -4,7 +4,7 @@
 import { request } from '@umijs/max';
 
 /**
- * 更新
+ * api列表
  * @param params
  */
 export async function findAll(params: MockType.MockQueryRequest) {

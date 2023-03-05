@@ -49,6 +49,7 @@ const IndexPage: React.FC = () => {
       await insert({
         apiPath: values.apiPath,
         delay: values.delay || 0,
+        apiDescription: values.apiDescription || '',
         apiContent: currentEditCode
       });
       message.success('保存成功');

@@ -12,6 +12,7 @@ declare namespace MockType {
     delay: number;
     createTime: Date;
     updateTime: Date;
+    apiDescription: string;
   }
 
   /**
@@ -29,6 +30,7 @@ declare namespace MockType {
     apiPath?: string;
     apiContent?: string;
     delay?: number;
+    apiDescription?: string;
   }
 
   

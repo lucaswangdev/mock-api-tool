@@ -36,6 +36,7 @@ const IndexPage: React.FC = () => {
     try {
       const delay = form.getFieldsValue().delay || 0;
       const apiPath = form.getFieldsValue().apiPath;
+      const apiDescription = form.getFieldsValue().apiDescription || '';
       if (!apiPath || apiPath.length < 1) {
         message.error('接口地址不能为空');
         return;
@@ -45,6 +46,7 @@ const IndexPage: React.FC = () => {
         apiContent: currentEditCode,
         apiPath,
         delay,
+        apiDescription
       });
       getApiList();
       message.success('保存成功');
@@ -67,7 +69,8 @@ const IndexPage: React.FC = () => {
     setcurrentEditCode(item.apiContent || '');
     form.setFieldsValue({
       apiPath: item.apiPath || '',
-      delay: item.delay || 0
+      delay: item.delay || 0,
+      apiDescription: item.apiDescription || '',
     });
 
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
@@ -143,7 +146,7 @@ const IndexPage: React.FC = () => {
                     <div className='item-wrapper'>
                       <div className='left-wrapper' onClick={() => currentApiItemClick(item)}>
                         <div className="api-name">{item.apiPath}</div>
-                        <div className="api-desc">{item.apiPath}说明</div>                    
+                        <div className="api-desc">{item.apiDescription}</div>                    
                       </div>
                       <div className='right-wrapper'>
                         <Button size='small' onClick={() => itemOperationClick('view', item)}>查看</Button>
@@ -166,11 +169,11 @@ const IndexPage: React.FC = () => {
                 >
                   <Input placeholder="请输入接口地址"/>
                 </Form.Item>
+                <Form.Item name="apiDescription" label="接口说明">
+                  <Input placeholder="请输入接口说明"/>
+                </Form.Item>
                 <Form.Item label="请求方式">
                   ALL（支持所有请求方式）
-                </Form.Item>
-                <Form.Item name="apiDesc" label="接口说明">
-                  <Input placeholder="请输入接口说明" disabled/>
                 </Form.Item>
                 <Form.Item name="delay" label="请求延时">
                   <Radio.Group>

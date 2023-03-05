@@ -17,6 +17,9 @@ const insert = async (_ctx) => {
       ? resBody.apiContent
       : "{}",
     delay: resBody.delay? resBody.delay : 0,
+    api_description: resBody.apiDescription
+      ? resBody.apiDescription
+      : "",
   };
   try {
     await ctxData.start(false);
@@ -50,6 +53,9 @@ const update = async (_ctx) => {
     api_path: resBody.apiPath ? resBody.apiPath : "",
     api_content: resBody.apiContent ? resBody.apiContent : "{}",
     delay: resBody.delay? resBody.delay : 0,
+    api_description: resBody.apiDescription
+      ? resBody.apiDescription
+      : "",
   };
   try {
     await ctxData.start(false);

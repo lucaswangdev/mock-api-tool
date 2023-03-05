@@ -24,11 +24,11 @@ const FormInput: React.FC<Props> = forwardRef((props, ref) => {
         >
           <Input placeholder="请输入接口地址" />
         </Form.Item>
+        <Form.Item name="apiDescription" label="接口说明">
+          <Input placeholder="请输入接口说明" />
+        </Form.Item>
         <Form.Item label="请求方式">
           ALL（支持所有请求方式）
-        </Form.Item>
-        <Form.Item name="apiDesc" label="接口说明">
-          <Input placeholder="请输入接口说明" />
         </Form.Item>
         <Form.Item name="delay" label="请求延时">
           <Radio.Group defaultValue={0}>

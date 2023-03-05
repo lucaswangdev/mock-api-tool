@@ -11,7 +11,7 @@
  Target Server Version : 50728
  File Encoding         : 65001
 
- Date: 30/09/2022 23:29:11
+ Date: 05/03/2023 14:14:05
 */
 
 SET NAMES utf8mb4;
@@ -28,16 +28,17 @@ CREATE TABLE `api_list` (
   `delay` int(11) NOT NULL DEFAULT '0' COMMENT '延时返回时间',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `api_description` varchar(1023) DEFAULT '' COMMENT '接口说明',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of api_list
 -- ----------------------------
 BEGIN;
-INSERT INTO `api_list` VALUES (1, 'users/userId', '{\"name\":\"get\"}', 0, '2022-09-30 20:53:42', '2022-09-30 20:56:47');
-INSERT INTO `api_list` VALUES (2, 'users/userId2', '{\"name\":\"post\"}', 3, '2022-09-30 20:55:04', '2022-09-30 23:19:38');
-INSERT INTO `api_list` VALUES (5, 'users/userId3', '{\"name\":\"put\"}', 0, '2022-09-30 20:58:36', '2022-09-30 20:58:36');
+INSERT INTO `api_list` VALUES (2, 'users/userId2', '{    \"name\": \"post222\"}', 2, '2022-09-30 20:55:04', '2023-03-05 13:55:23', 'xxx接口');
+INSERT INTO `api_list` VALUES (17, 'users/userId3', '{}', 2, '2023-03-05 13:51:40', '2023-03-05 13:56:32', 'yyy接口');
+INSERT INTO `api_list` VALUES (18, 'user/test4', '{    \"data\": [        {            \"name\": \"lucas1\"        },        {            \"name\": \"lucas2\"        },        {            \"name\": \"lucas3\"        },        {            \"name\": \"lucas4\"        }    ]}', 2, '2023-03-05 14:06:08', '2023-03-05 14:06:08', '添加一个分页接口');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

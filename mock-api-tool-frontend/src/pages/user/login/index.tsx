@@ -1,4 +1,5 @@
 import Logo from '@/assets/logo.png';
+import { setToken } from '@/configs/auth';
 import { userLogin } from '@/services/userService';
 import { Link } from '@@/exports';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
@@ -28,8 +29,7 @@ export default () => {
         ...initialState,
         loginUser: res.data,
       } as InitialState);
-      localStorage.setItem('Authorization', 'Bearer ' + res.data.token);
-
+      setToken(res.data.token)
       // 重定向到之前页面
       window.location.href = searchParams.get('redirect') ?? '/';
     } catch (e: any) {

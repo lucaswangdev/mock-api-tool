@@ -41,7 +41,7 @@ const isDev = process.env.NODE_ENV === 'development';
  * https://umijs.org/docs/max/request
  */
 export const request: RequestConfig = {
-  baseURL: isDev ? '/api' : '你的线上接口地址',
+  baseURL: isDev ? '/api' : '/api',
   timeout: 10000,
   withCredentials: true,
   // other axios options you want
@@ -65,9 +65,6 @@ export const request: RequestConfig = {
     (response) => {
       // 不再需要异步处理读取返回体内容，可直接在 data 中读出，部分字段可在 config 中找到
       const data: any = response.data;
-      console.log('====================================');
-      console.log('data', data);
-      console.log('====================================');
       const path = response.request.responseURL;
       if (!data) {
         throw new Error('服务异常');

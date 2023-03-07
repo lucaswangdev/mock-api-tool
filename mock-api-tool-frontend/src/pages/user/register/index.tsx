@@ -43,8 +43,8 @@ export default () => {
     >
       <LoginForm<UserType.UserRegisterRequest>
         logo={Logo}
-        title="SQL之父"
-        subTitle="快速生成代码和数据"
+        title="Mock-api-tool"
+        subTitle="快速生成 Mock 接口数据"
         submitter={{
           searchConfig: {
             submitText: '注册',

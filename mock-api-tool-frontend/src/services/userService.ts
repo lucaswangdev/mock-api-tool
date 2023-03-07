@@ -107,6 +107,19 @@ export async function userLoginAnonymous() {
 }
 
 /**
+ * 获取用户信息
+ */
+export async function userInfo() {
+  return request<BaseResponse<UserType.UserVO>>('/user/userInfo', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: {},
+  });
+}
+
+/**
  * 用户注销
  */
 export async function userLogout() {

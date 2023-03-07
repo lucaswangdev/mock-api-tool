@@ -85,7 +85,7 @@ class CtxData{
    * commit transaction
    */
   commit = async () => {
-    console.log(`commit ^^^^^`);
+    console.log(`commit operation`);
     await this.connection.commit();
     await this.release();
   }
@@ -94,7 +94,7 @@ class CtxData{
    * rollback transaction
    */
   rollback = async () => {
-    console.log(`rollback ㅠㅠㅠㅠㅠ`);
+    console.log(`rollback operation`);
     await this.connection.rollback();
     await this.release();
   }

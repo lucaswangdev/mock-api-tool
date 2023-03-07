@@ -40,6 +40,8 @@ router.post("/findAll", MockController.findAll);
 
 router.post("/user/register", UserController.register);
 router.post("/user/login", UserController.login);
+router.post("/user/userInfo", UserController.userInfo);
+router.post("/user/logout", UserController.logout);
 
 /**
  * 数据库中保存的 mock 接口 数据

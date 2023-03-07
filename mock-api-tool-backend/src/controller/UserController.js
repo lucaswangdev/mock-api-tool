@@ -13,11 +13,16 @@ const register = async (_ctx) => {
   let ctxData = new CtxData(_ctx);
   let ctx = ctxData.ctx;
   const resBody = ctx.request.body;
-  console.log("resBody===>", resBody);
-  const { userName, userAccount, userPassword} = resBody;
-  if(!(userAccount && userPassword)) {
+  const { userName, userAccount, userPassword, checkPassword} = resBody;
+  if(!(userName && userAccount && userPassword && checkPassword)) {
     ctx.fail({
       msg: '用户名或密码不能为空'
+    });
+    return;
+  }
+  if(userPassword !== checkPassword) {
+    ctx.fail({
+      msg: '两次密码不一致'
     });
     return;
   }
@@ -65,7 +70,6 @@ const login = async (_ctx) => {
   let ctxData = new CtxData(_ctx);
   let ctx = ctxData.ctx;
   const resBody = ctx.request.body;
-  console.log("resBody===>", resBody);
   const { userAccount, userPassword} = resBody;
   if(!(userAccount && userPassword)) {
     ctx.fail({
@@ -81,7 +85,7 @@ const login = async (_ctx) => {
     const userList = await UserService.findByUserAccount(ctxData, data);
     if(!userList.length) {
       ctx.fail({
-        msg: '用户名或密码不能为空'
+        msg: '用户名或密码不正确'
       });
       return;
     }
@@ -94,6 +98,7 @@ const login = async (_ctx) => {
           // 生成 token 返回给客户端
           token: jsonwebtoken.sign({
             userAccount,
+            userId: user.id,
             // 设置 token 过期时间
             exp: Math.floor(Date.now() / 1000) + (60 * 60), // 60 seconds * 60 minutes = 1 hour
           }, secret),
@@ -117,16 +122,37 @@ const login = async (_ctx) => {
 };
 
 /**
- * logout
-
+ * userInfo
+ */
+const userInfo = async (_ctx) => {
+  let ctxData = new CtxData(_ctx);
+  let ctx = ctxData.ctx;
+  const { userAccount } = ctx.state.user;
+  if(!userAccount) {
+    ctx.fail({
+      msg: '用户信息获取失败'
+    });
+    return;
+  }
+  const data = {
+    userAccount,
+  };
+  try {
+    await ctxData.start(false);
+    const userList = await UserService.findByUserAccount(ctxData, data);
+    if(!userList.length) {
+      ctx.fail({
+        msg: '用户信息获取失败'
+      });
+      return;
     }
-
-
-    ctx.response.body = {
-      success: true,
-      msg: "操作成功",
-      data: mockList[0] || {}
-    };
+    const user = userList[0] || {};
+    ctx.success({
+      data: {
+        userName: user.userName,
+        userAccount: user.userAccount,
+      }
+    })
   } catch (e) {
     // Logger.error(e.stack);
     await ctxData.error();
@@ -140,13 +166,26 @@ const login = async (_ctx) => {
 };
 
 /**
+ * logout
+ */
+const logout = async (_ctx) => {
+  let ctxData = new CtxData(_ctx);
+  let ctx = ctxData.ctx;
+  const { userAccount } = ctx.state.user;
+  ctx.success({
+    data: {
+      msg: "注销成功"
+    }
+  });
+};
+
+/**
  * update
  */
 const update = async (_ctx) => {
   let ctxData = new CtxData(_ctx);
   let ctx = ctxData.ctx;
   const resBody = ctx.request.body;
-  console.log("resBody===>", resBody);
   const data = {
     id: resBody.id,
     api_path: resBody.apiPath ? resBody.apiPath : "",
@@ -184,7 +223,6 @@ const deleteApi = async (_ctx) => {
   let ctxData = new CtxData(_ctx);
   let ctx = ctxData.ctx;
   const resBody = ctx.request.body;
-  console.log("resBody===>", resBody);
   const data = {
     id: resBody.id,
   };
@@ -207,40 +245,14 @@ const deleteApi = async (_ctx) => {
   }
 };
 
-/**
- * findAll
- */
-const findAll = async (_ctx) => {
-  let ctxData = new CtxData(_ctx);
-  let ctx = ctxData.ctx;
-  const resBody = ctx.request.body;
-  const data = {};
-  try {
-    await ctxData.start(false);
-    const mockList = await UserService.findAll(ctxData, data);
-    ctx.response.body = {
-      success: true,
-      msg: "操作成功",
-      data: mockList || []
-    };
-  } catch (e) {
-    // Logger.error(e.stack);
-    await ctxData.error();
-    ctx.response.body = {
-      success: false,
-      msg: "操作失败",
-    };
-  } finally {
-    await ctxData.end();
-  }
-};
 
 
 
 module.exports = {
   register,
   login,
+  userInfo,
   update,
   deleteApi,
-  findAll,
+  logout
 };

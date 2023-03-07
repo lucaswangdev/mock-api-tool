@@ -10,7 +10,7 @@ const insert = async (_ctx) => {
   let ctxData = new CtxData(_ctx);
   let ctx = ctxData.ctx;
   const resBody = ctx.request.body;
-  console.log("resBody===>", resBody);
+  const { userId } = ctx.state.user;
   const data = {
     api_path: resBody.apiPath,
     api_content: resBody.apiContent
@@ -20,6 +20,7 @@ const insert = async (_ctx) => {
     api_description: resBody.apiDescription
       ? resBody.apiDescription
       : "",
+    userId
   };
   try {
     await ctxData.start(false);
@@ -47,7 +48,7 @@ const update = async (_ctx) => {
   let ctxData = new CtxData(_ctx);
   let ctx = ctxData.ctx;
   const resBody = ctx.request.body;
-  console.log("resBody===>", resBody);
+  const { userId } = ctx.state.user;
   const data = {
     id: resBody.id,
     api_path: resBody.apiPath ? resBody.apiPath : "",
@@ -56,6 +57,7 @@ const update = async (_ctx) => {
     api_description: resBody.apiDescription
       ? resBody.apiDescription
       : "",
+    userId
   };
   try {
     await ctxData.start(false);
@@ -83,9 +85,10 @@ const findById = async (_ctx) => {
   let ctxData = new CtxData(_ctx);
   let ctx = ctxData.ctx;
   const resBody = ctx.request.body;
-  console.log("resBody===>", resBody);
+  const { userId } = ctx.state.user;
   const data = {
     id: resBody.id,
+    userId
   };
   try {
     await ctxData.start(false);
@@ -114,9 +117,10 @@ const deleteApi = async (_ctx) => {
   let ctxData = new CtxData(_ctx);
   let ctx = ctxData.ctx;
   const resBody = ctx.request.body;
-  console.log("resBody===>", resBody);
+  const { userId } = ctx.state.user;
   const data = {
     id: resBody.id,
+    userId
   };
   try {
     await ctxData.start(false);
@@ -144,7 +148,10 @@ const findAll = async (_ctx) => {
   let ctxData = new CtxData(_ctx);
   let ctx = ctxData.ctx;
   const resBody = ctx.request.body;
-  const data = {};
+  const { userId } = ctx.state.user;
+  const data = {
+    userId
+  };
   try {
     await ctxData.start(false);
     const mockList = await MockService.findAll(ctxData, data);
@@ -173,10 +180,19 @@ const all = async (_ctx) => {
   let ctx = ctxData.ctx;
   let { repositoryId, url } = ctx.params;
   const resBody = ctx.request.body;
-  console.log("resBody===>", resBody);
+  const { userId } = ctx.state.user;
   const { pageNum, pageSize } = resBody;
+  if(!userId) {
+   ctx.fail({
+      data: {
+        msg: "not found Authorization token"
+      }
+    })
+    return;
+  }
   const data = {
     api_path: url,
+    userId
   };
   try {
     await ctxData.start(false);

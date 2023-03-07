@@ -3,7 +3,7 @@ function sqlCompile(template) {
    * $表达式 动态拦截
    */
   if (/\$([\w\.]{0,})(\W)/g.test(template)) {
-    console.log('数据库关键字拦截');
+    // console.log('数据库关键字拦截');
     // 数据库关键字拦截
     if (/where|select|sleep|benchmark/gi.test(template)) {
       throw new Error(
@@ -38,7 +38,7 @@ function sqlCompile(template) {
 function outputSQL(mappingString, data) {
   const mapperFun = eval(sqlCompile(mappingString));
   const sql = mapperFun(data);
-  console.log('-------------mapper输出sql:-----------------\n' + sql);
+  // console.log('-------------mapper输出sql:-----------------\n' + sql);
   return sql;
 }
 

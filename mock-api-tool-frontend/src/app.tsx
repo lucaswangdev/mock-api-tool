@@ -49,9 +49,38 @@ export const request: RequestConfig = {
     errorHandler() {},
     errorThrower() {},
   },
-  requestInterceptors: [],
+  requestInterceptors: [
+    (request: any) => {
+      const _request = {
+        ...request,
+        headers: {
+          ...request.headers,
+          Authorization: localStorage.getItem("Authorization"),
+        }
+      }
+      return _request;
+    }
+  ],
   responseInterceptors: [
     (response) => {
+      // 不再需要异步处理读取返回体内容，可直接在 data 中读出，部分字段可在 config 中找到
+      const data: any = response.data;
+      console.log('====================================');
+      console.log('data', data);
+      console.log('====================================');
+      const path = response.request.responseURL;
+      if (!data) {
+        throw new Error('服务异常');
+      }
+      const code = data.code ?? 50000;
+      // 未登录，且不为获取用户登录信息接口
+      if (code === 401 &&
+        !path.includes('/user/login') &&
+        !location.pathname.includes('/user/login')) {
+        // 跳转至登录页
+        window.location.href = `/user/login`;
+        throw new Error('请先登录');
+      }
       // if (code !== 0) {
       //   console.error(`request error, path = ${path}`, data);
       //   throw new Error(data.message ?? '服务器错误');

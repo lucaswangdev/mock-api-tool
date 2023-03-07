@@ -13,6 +13,23 @@ export default [
     path: '/add',
     component: 'add',
   },
+  {
+    path: '/user',
+    hideInMenu: true,
+    headerRender: false,
+    routes: [
+      {
+        name: '用户登录',
+        path: '/user/login',
+        component: 'user/login',
+      },
+      {
+        name: '用户注册',
+        path: '/user/register',
+        component: 'user/register',
+      },
+    ],
+  },
 ];
 
 // 查看mock接口 basePath

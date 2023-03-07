@@ -14,4 +14,5 @@ const mysqlConfig = {
 module.exports = {
   port: 4000, // 服务启动的端口号
   mysqlConfig, // mysql 配置
+  secret: 'jwt_json'
 }

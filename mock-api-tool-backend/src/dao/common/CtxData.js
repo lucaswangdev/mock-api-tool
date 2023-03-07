@@ -120,7 +120,7 @@ class CtxData{
     let endRow = pageNum * pageSize <= total ? pageNum * pageSize : total;
     return {
       success: true,
-      errorMsg: "",
+      msg: "",
       errorCode: "",
       data: {
         pageNum,

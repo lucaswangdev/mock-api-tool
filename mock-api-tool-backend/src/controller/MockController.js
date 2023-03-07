@@ -26,14 +26,14 @@ const insert = async (_ctx) => {
     await MockService.insert(ctxData, data);
     ctx.response.body = {
       success: true,
-      errorMsg: "操作成功",
+      msg: "操作成功",
     };
   } catch (e) {
     // Logger.error(e.stack);
     await ctxData.error();
     ctx.response.body = {
       success: false,
-      errorMsg: "操作失败",
+      msg: "操作失败",
     };
   } finally {
     await ctxData.end();
@@ -62,14 +62,14 @@ const update = async (_ctx) => {
     await MockService.update(ctxData, data);
     ctx.response.body = {
       success: true,
-      errorMsg: "操作成功",
+      msg: "操作成功",
     };
   } catch (e) {
     // Logger.error(e.stack);
     await ctxData.error();
     ctx.response.body = {
       success: false,
-      errorMsg: "操作失败",
+      msg: "操作失败",
     };
   } finally {
     await ctxData.end();
@@ -92,7 +92,7 @@ const findById = async (_ctx) => {
     const mockList = await MockService.findById(ctxData, data);
     ctx.response.body = {
       success: true,
-      errorMsg: "操作成功",
+      msg: "操作成功",
       data: mockList[0] || {}
     };
   } catch (e) {
@@ -100,7 +100,7 @@ const findById = async (_ctx) => {
     await ctxData.error();
     ctx.response.body = {
       success: false,
-      errorMsg: "操作失败",
+      msg: "操作失败",
     };
   } finally {
     await ctxData.end();
@@ -123,14 +123,14 @@ const deleteApi = async (_ctx) => {
     await MockService.deleteApi(ctxData, data);
     ctx.response.body = {
       success: true,
-      errorMsg: "操作成功",
+      msg: "操作成功",
     };
   } catch (e) {
     // Logger.error(e.stack);
     await ctxData.error();
     ctx.response.body = {
       success: false,
-      errorMsg: "操作失败",
+      msg: "操作失败",
     };
   } finally {
     await ctxData.end();
@@ -150,7 +150,7 @@ const findAll = async (_ctx) => {
     const mockList = await MockService.findAll(ctxData, data);
     ctx.response.body = {
       success: true,
-      errorMsg: "操作成功",
+      msg: "操作成功",
       data: mockList || []
     };
   } catch (e) {
@@ -158,7 +158,7 @@ const findAll = async (_ctx) => {
     await ctxData.error();
     ctx.response.body = {
       success: false,
-      errorMsg: "操作失败",
+      msg: "操作失败",
     };
   } finally {
     await ctxData.end();
@@ -198,7 +198,7 @@ const all = async (_ctx) => {
     } else {
       ctx.response.body = {
         success: false,
-        errorMsg: "not found",
+        msg: "not found",
       };
     }
   } catch (e) {
@@ -206,7 +206,7 @@ const all = async (_ctx) => {
     await ctxData.error();
     ctx.response.body = {
       success: false,
-      errorMsg: e.message || "操作失败",
+      msg: e.message || "操作失败",
     };
   } finally {
     await ctxData.end();

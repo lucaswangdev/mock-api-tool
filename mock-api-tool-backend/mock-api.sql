@@ -11,7 +11,7 @@
  Target Server Version : 50728
  File Encoding         : 65001
 
- Date: 05/03/2023 14:14:05
+ Date: 07/03/2023 09:24:57
 */
 
 SET NAMES utf8mb4;
@@ -39,6 +39,32 @@ BEGIN;
 INSERT INTO `api_list` VALUES (2, 'users/userId2', '{    \"name\": \"post222\"}', 2, '2022-09-30 20:55:04', '2023-03-05 13:55:23', 'xxx接口');
 INSERT INTO `api_list` VALUES (17, 'users/userId3', '{}', 2, '2023-03-05 13:51:40', '2023-03-05 13:56:32', 'yyy接口');
 INSERT INTO `api_list` VALUES (18, 'user/test4', '{    \"data\": [        {            \"name\": \"lucas1\"        },        {            \"name\": \"lucas2\"        },        {            \"name\": \"lucas3\"        },        {            \"name\": \"lucas4\"        }    ]}', 2, '2023-03-05 14:06:08', '2023-03-05 14:06:08', '添加一个分页接口');
+COMMIT;
+
+-- ----------------------------
+-- Table structure for user
+-- ----------------------------
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `userName` varchar(256) DEFAULT NULL COMMENT '用户昵称',
+  `userAccount` varchar(256) NOT NULL COMMENT '账号',
+  `userAvatar` varchar(1024) DEFAULT NULL COMMENT '用户头像',
+  `gender` tinyint(4) DEFAULT NULL COMMENT '性别',
+  `userRole` varchar(256) NOT NULL DEFAULT 'user' COMMENT '用户角色：user/ admin',
+  `userPassword` varchar(512) NOT NULL COMMENT '密码',
+  `createTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updateTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `isDelete` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否删除',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uni_userAccount` (`userAccount`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='用户';
+
+-- ----------------------------
+-- Records of user
+-- ----------------------------
+BEGIN;
+INSERT INTO `user` VALUES (2, 'adminNick', 'admin', NULL, NULL, 'user', '$2b$10$7lq6lzaIFTCWz9abcdGHZud72Xwjyf9k24AMQmVuQvBszXkultLFi', '2023-03-06 21:52:45', '2023-03-06 21:52:45', 0);
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

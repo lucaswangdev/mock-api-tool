@@ -23,7 +23,7 @@ const IndexPage: React.FC = () => {
   const getApiList = async () => {
     try {
       const res = await findAll({});
-      setApiList(res.data);
+      setApiList(res.data || []);
     } catch (e: any) {
       message.error('获取api数据列表失败:' + e.message);
     }

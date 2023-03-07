@@ -11,7 +11,7 @@
  Target Server Version : 50728
  File Encoding         : 65001
 
- Date: 07/03/2023 09:24:57
+ Date: 07/03/2023 22:51:51
 */
 
 SET NAMES utf8mb4;
@@ -29,16 +29,18 @@ CREATE TABLE `api_list` (
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `api_description` varchar(1023) DEFAULT '' COMMENT '接口说明',
+  `userId` bigint(20) NOT NULL COMMENT '创建用户 id',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of api_list
 -- ----------------------------
 BEGIN;
-INSERT INTO `api_list` VALUES (2, 'users/userId2', '{    \"name\": \"post222\"}', 2, '2022-09-30 20:55:04', '2023-03-05 13:55:23', 'xxx接口');
-INSERT INTO `api_list` VALUES (17, 'users/userId3', '{}', 2, '2023-03-05 13:51:40', '2023-03-05 13:56:32', 'yyy接口');
-INSERT INTO `api_list` VALUES (18, 'user/test4', '{    \"data\": [        {            \"name\": \"lucas1\"        },        {            \"name\": \"lucas2\"        },        {            \"name\": \"lucas3\"        },        {            \"name\": \"lucas4\"        }    ]}', 2, '2023-03-05 14:06:08', '2023-03-05 14:06:08', '添加一个分页接口');
+INSERT INTO `api_list` VALUES (2, 'users/userId2', '{    \"name\": \"post222\"}', 1, '2022-09-30 20:55:04', '2023-03-07 21:57:22', 'xxx接口', 2);
+INSERT INTO `api_list` VALUES (17, 'users/userId3', '{}', 2, '2023-03-05 13:51:40', '2023-03-05 13:56:32', 'yyy接口', 2);
+INSERT INTO `api_list` VALUES (18, 'user/test4', '{    \"data\": [        {            \"name\": \"lucas1\"        },        {            \"name\": \"lucas2\"        },        {            \"name\": \"lucas3\"        },        {            \"name\": \"lucas4\"        }    ]}', 2, '2023-03-05 14:06:08', '2023-03-05 14:06:08', '添加一个分页接口', 2);
+INSERT INTO `api_list` VALUES (19, 'users/userId5', '{    \"name\": \"lucas\"}', 2, '2023-03-07 22:38:24', '2023-03-07 22:38:24', '测试接口5', 2);
 COMMIT;
 
 -- ----------------------------

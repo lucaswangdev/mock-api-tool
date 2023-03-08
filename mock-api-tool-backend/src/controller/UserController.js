@@ -5,6 +5,7 @@ const jsonwebtoken = require("jsonwebtoken");
 const CtxData = require("../dao/common/CtxData");
 const UserService = require("../service/UserService");
 const { secret } = require("../config");
+const Logger = require("../utils/logger");
 
 /**
  * register
@@ -52,7 +53,7 @@ const register = async (_ctx) => {
       });
     }
   } catch (e) {
-    // Logger.error(e.stack);
+    Logger.error(e.stack);
     await ctxData.error();
     ctx.response.body = {
       success: false,
@@ -110,7 +111,7 @@ const login = async (_ctx) => {
       });
     }
   } catch (e) {
-    // Logger.error(e.stack);
+    Logger.error(e.stack);
     await ctxData.error();
     ctx.response.body = {
       success: false,
@@ -154,7 +155,7 @@ const userInfo = async (_ctx) => {
       }
     })
   } catch (e) {
-    // Logger.error(e.stack);
+    Logger.error(e.stack);
     await ctxData.error();
     ctx.response.body = {
       success: false,
@@ -203,7 +204,7 @@ const update = async (_ctx) => {
       msg: "操作成功",
     };
   } catch (e) {
-    // Logger.error(e.stack);
+    Logger.error(e.stack);
     await ctxData.error();
     ctx.response.body = {
       success: false,
@@ -234,7 +235,7 @@ const deleteApi = async (_ctx) => {
       msg: "操作成功",
     };
   } catch (e) {
-    // Logger.error(e.stack);
+    Logger.error(e.stack);
     await ctxData.error();
     ctx.response.body = {
       success: false,

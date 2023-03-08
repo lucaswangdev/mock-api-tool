@@ -9,7 +9,7 @@ const router = new Router();
 const app = new Koa();
 const config = require("./config/index");
 // 路由前缀
-// router.prefix('/api');
+router.prefix('/api');
 const routerResponse = require("./middleware/routerResponse");
 const errorHandle = require("./middleware/errorHandle");
 

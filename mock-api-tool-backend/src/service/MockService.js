@@ -1,4 +1,5 @@
 const MockMapper = require("../dao/mapper/MockMapper");
+const Logger = require("../utils/logger");
 
 /**
  * insert
@@ -10,7 +11,7 @@ const insert = async (ctxData, params) => {
     const [result, columnFields] = await connection.query(statement);
     return ctxData.camelizeKeys(result);
   } catch (e) {
-    // Logger.error(e.stack);
+    Logger.error(e.stack);
     console.error(e.stack);
     throw e;
   }
@@ -26,7 +27,7 @@ const update = async (ctxData, params) => {
     const [result, columnFields] = await connection.query(statement);
     return ctxData.camelizeKeys(result);
   } catch (e) {
-    // Logger.error(e.stack);
+    Logger.error(e.stack);
     console.error(e.stack);
     throw e;
   }
@@ -42,7 +43,7 @@ const findById = async (ctxData, params) => {
     const [result, columnFields] = await connection.query(statement);
     return ctxData.camelizeKeys(result);
   } catch (e) {
-    // Logger.error(e.stack);
+    Logger.error(e.stack);
     console.error(e.stack);
     throw e;
   }
@@ -58,7 +59,7 @@ const deleteApi = async (ctxData, params) => {
     const [result, columnFields] = await connection.query(statement);
     return ctxData.camelizeKeys(result);
   } catch (e) {
-    // Logger.error(e.stack);
+    Logger.error(e.stack);
     console.error(e.stack);
     throw e;
   }
@@ -74,7 +75,7 @@ const findByApiPath = async (ctxData, params) => {
     const [result, columnFields] = await connection.query(statement);
     return ctxData.camelizeKeys(result);
   } catch (e) {
-    // Logger.error(e.stack);
+    Logger.error(e.stack);
     console.error(e.stack);
     throw e;
   }
@@ -90,7 +91,7 @@ const findAll = async (ctxData, params) => {
     const [result, columnFields] = await connection.query(statement);
     return ctxData.camelizeKeys(result);
   } catch (e) {
-    // Logger.error(e.stack);
+    Logger.error(e.stack);
     console.error(e.stack);
     throw e;
   }

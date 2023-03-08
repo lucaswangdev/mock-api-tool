@@ -9,7 +9,7 @@ mock-api-tool-frontend/node_modules
 *.DS_Store
 old-versions/**/*.DS_Store
 mock-api-tool-backend/**/*.DS_Store
-
+mock-api-tool-backend/logs
 
 mock-api-tool-frontend/.vercel
 mock-api-tool-frontend/node_modules

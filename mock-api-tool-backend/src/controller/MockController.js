@@ -2,6 +2,7 @@ const util = require("util");
 const sleep = util.promisify(setTimeout);
 const CtxData = require("../dao/common/CtxData");
 const MockService = require("../service/MockService");
+const Logger = require("../utils/logger");
 
 /**
  * insert
@@ -30,7 +31,7 @@ const insert = async (_ctx) => {
       msg: "操作成功",
     };
   } catch (e) {
-    // Logger.error(e.stack);
+    Logger.error(e.stack);
     await ctxData.error();
     ctx.response.body = {
       success: false,
@@ -67,7 +68,7 @@ const update = async (_ctx) => {
       msg: "操作成功",
     };
   } catch (e) {
-    // Logger.error(e.stack);
+    Logger.error(e.stack);
     await ctxData.error();
     ctx.response.body = {
       success: false,
@@ -99,7 +100,7 @@ const findById = async (_ctx) => {
       data: mockList[0] || {}
     };
   } catch (e) {
-    // Logger.error(e.stack);
+    Logger.error(e.stack);
     await ctxData.error();
     ctx.response.body = {
       success: false,
@@ -130,7 +131,7 @@ const deleteApi = async (_ctx) => {
       msg: "操作成功",
     };
   } catch (e) {
-    // Logger.error(e.stack);
+    Logger.error(e.stack);
     await ctxData.error();
     ctx.response.body = {
       success: false,
@@ -155,13 +156,14 @@ const findAll = async (_ctx) => {
   try {
     await ctxData.start(false);
     const mockList = await MockService.findAll(ctxData, data);
+    Logger.info("测试log222")
     ctx.response.body = {
       success: true,
       msg: "操作成功",
       data: mockList || []
     };
   } catch (e) {
-    // Logger.error(e.stack);
+    Logger.error(e.stack);
     await ctxData.error();
     ctx.response.body = {
       success: false,
@@ -218,7 +220,7 @@ const all = async (_ctx) => {
       };
     }
   } catch (e) {
-    // Logger.error(e.stack);
+    Logger.error(e.stack);
     await ctxData.error();
     ctx.response.body = {
       success: false,

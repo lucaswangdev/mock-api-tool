@@ -1,4 +1,4 @@
-const UserMapper = require("../dao/mapper/UserMapper");
+const ProjectMapper = require("../dao/mapper/ProjectMapper");
 const Logger = require("../utils/logger");
 
 /**
@@ -6,7 +6,7 @@ const Logger = require("../utils/logger");
  */
 const insert = async (ctxData, params) => {
   try {
-    const statement = ctxData.outputSQL(UserMapper.insert, params);
+    const statement = ctxData.outputSQL(ProjectMapper.insert, params);
     const connection = ctxData.getConnection();
     const [result, columnFields] = await connection.query(statement);
     return ctxData.camelizeKeys(result);
@@ -22,7 +22,7 @@ const insert = async (ctxData, params) => {
  */
 const update = async (ctxData, params) => {
   try {
-    const statement = ctxData.outputSQL(UserMapper.update, params);
+    const statement = ctxData.outputSQL(ProjectMapper.update, params);
     const connection = ctxData.getConnection();
     const [result, columnFields] = await connection.query(statement);
     return ctxData.camelizeKeys(result);
@@ -34,27 +34,11 @@ const update = async (ctxData, params) => {
 };
 
 /**
- * findByUserAccount
+ * findAllByUserId
  */
-const findByUserAccount = async (ctxData, params) => {
+const findAllByUserId = async (ctxData, params) => {
   try {
-    const statement = ctxData.outputSQL(UserMapper.findByUserAccount, params);
-    const connection = ctxData.getConnection();
-    const [result, columnFields] = await connection.query(statement);
-    return ctxData.camelizeKeys(result);
-  } catch (e) {
-    Logger.error(e.stack);
-    console.error(e.stack);
-    throw e;
-  }
-};
-
-/**
- * findAllByProject
- */
-const findAllByProject = async (ctxData, params) => {
-  try {
-    const statement = ctxData.outputSQL(UserMapper.findAllByProject, params);
+    const statement = ctxData.outputSQL(ProjectMapper.findAllByUserId, params);
     const connection = ctxData.getConnection();
     const [result, columnFields] = await connection.query(statement);
     return ctxData.camelizeKeys(result);
@@ -70,7 +54,7 @@ const findAllByProject = async (ctxData, params) => {
  */
 const deleteApi = async (ctxData, params) => {
   try {
-    const statement = ctxData.outputSQL(UserMapper.delete, params);
+    const statement = ctxData.outputSQL(ProjectMapper.delete, params);
     const connection = ctxData.getConnection();
     const [result, columnFields] = await connection.query(statement);
     return ctxData.camelizeKeys(result);
@@ -85,6 +69,5 @@ module.exports = {
   insert,
   update,
   deleteApi,
-  findByUserAccount,
-  findAllByProject
+  findAllByUserId,
 };

@@ -1,11 +1,11 @@
 /**
- * Mock类型定义
+ * Project类型定义
  */
-declare namespace MockType {
+declare namespace ProjectType {
   /**
    * 实体
    */
-  interface Mock {
+  interface Project {
     id: number;
     apiPath: string;
     apiContent: string;
@@ -13,14 +13,13 @@ declare namespace MockType {
     createTime: Date;
     updateTime: Date;
     apiDescription: string;
-    projectCode?: string;
   }
 
   /**
    * 查询请求
    */
-  interface MockQueryRequest {
-    id?: number;
+  interface ProjectQueryRequest {
+    userId?: number;
     projectCode?: string;
   }
 
@@ -33,9 +32,5 @@ declare namespace MockType {
     apiContent?: string;
     delay?: number;
     apiDescription?: string;
-    projectCode?: string;
   }
-
-  
-
 }

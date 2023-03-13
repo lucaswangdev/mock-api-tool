@@ -3,61 +3,44 @@ const sleep = util.promisify(setTimeout);
 const bcrypt = require("bcrypt");
 const jsonwebtoken = require("jsonwebtoken");
 const CtxData = require("../dao/common/CtxData");
-const UserService = require("../service/UserService");
+const ProjectService = require("../service/ProjectService");
+const ProjectUserService = require("../service/ProjectUserService");
 const { secret } = require("../config");
 const Logger = require("../utils/logger");
 
 /**
- * register
+ * insert
  */
-const register = async (_ctx) => {
+const insert = async (_ctx) => {
   let ctxData = new CtxData(_ctx);
   let ctx = ctxData.ctx;
   const resBody = ctx.request.body;
-  const { userName, userAccount, userPassword, checkPassword} = resBody;
-  if(!(userName && userAccount && userPassword && checkPassword)) {
+  const { projectName, projectCode } = resBody;
+  const { userId } = ctx.state.user;
+  if(!(projectName && projectCode)) {
     ctx.fail({
-      msg: '用户名或密码不能为空'
+      msg: '项目名称或项目ID不能为空'
     });
     return;
   }
-  if(userPassword !== checkPassword) {
-    ctx.fail({
-      msg: '两次密码不一致'
-    });
-    return;
-  }
-  // authentication will take approximately 13 seconds
-  // https://pthree.org/wp-content/uploads/2016/06/bcrypt.png
-  const hashCost = 10;
-  const _userPassword = await bcrypt.hash(userPassword, hashCost)
   const data = {
-    userName: resBody.userName || '',
-    userAccount: resBody.userAccount,
-    userPassword: _userPassword,
+    projectName: resBody.projectName || '',
+    projectCode: resBody.projectCode,
   };
   try {
-    await ctxData.start(false);
-    const userList = await UserService.findByUserAccount(ctxData, { 
-      userAccount: resBody.userAccount
+    await ctxData.start(true);
+    await ProjectService.insert(ctxData, data);
+    await ProjectUserService.insert(ctxData, {
+      projectCode,
+      userId,
     });
-    if(!userList.length) {
-      await UserService.insert(ctxData, data);
-      ctx.response.body = {
-        success: true,
-        msg: "操作成功",
-      };
-    } else {
-      ctx.fail({
-        msg: '用户名已经存在'
-      });
-    }
+    ctx.success();
   } catch (e) {
     Logger.error(e.stack);
     await ctxData.error();
     ctx.response.body = {
       success: false,
-      msg: "操作失败",
+      msg: "项目创建失败",
     };
   } finally {
     await ctxData.end();
@@ -83,7 +66,7 @@ const login = async (_ctx) => {
   };
   try {
     await ctxData.start(false);
-    const userList = await UserService.findByUserAccount(ctxData, data);
+    const userList = await ProjectService.findByUserAccount(ctxData, data);
     if(!userList.length) {
       ctx.fail({
         msg: '用户名或密码不正确'
@@ -101,7 +84,7 @@ const login = async (_ctx) => {
             userAccount,
             userId: user.id,
             // 设置 token 过期时间
-            exp: Math.floor(Date.now() / 1000) + (60 * 60 * 4), // 60 seconds * 60 minutes = 1 hour
+            exp: Math.floor(Date.now() / 1000) + (60 * 60), // 60 seconds * 60 minutes = 1 hour
           }, secret),
         }
       })
@@ -123,71 +106,28 @@ const login = async (_ctx) => {
 };
 
 /**
- * userInfo
+ * projectList
  */
-const userInfo = async (_ctx) => {
+const projectList = async (_ctx) => {
   let ctxData = new CtxData(_ctx);
   let ctx = ctxData.ctx;
-  const { userAccount } = ctx.state.user;
-  if(!userAccount) {
+  const { userId } = ctx.state.user;
+  if(!userId) {
     ctx.fail({
-      msg: '用户信息获取失败'
+      msg: '登录信息获取失败'
     });
     return;
   }
   const data = {
-    userAccount,
+    userId,
   };
   try {
     await ctxData.start(false);
-    const userList = await UserService.findByUserAccount(ctxData, data);
-    if(!userList.length) {
-      ctx.fail({
-        msg: '用户信息获取失败'
-      });
-      return;
-    }
-    const user = userList[0] || {};
+    const projectList = await ProjectService.findAllByUserId(ctxData, data);
     ctx.success({
       data: {
-        userName: user.userName,
-        userAccount: user.userAccount,
+        projectList: projectList || [],
       }
-    })
-  } catch (e) {
-    Logger.error(e.stack);
-    await ctxData.error();
-    ctx.response.body = {
-      success: false,
-      msg: "操作失败",
-    };
-  } finally {
-    await ctxData.end();
-  }
-};
-
-/**
- * findAllByProject
- */
-const findAllByProject = async (_ctx) => {
-  let ctxData = new CtxData(_ctx);
-  let ctx = ctxData.ctx;
-  const resBody = ctx.request.body;
-  const { projectCode } = resBody;
-  if(!projectCode) {
-    ctx.fail({
-      msg: '项目ID获取失败'
-    });
-    return;
-  }
-  const data = {
-    projectCode,
-  };
-  try {
-    await ctxData.start(false);
-    const userList = await UserService.findAllByProject(ctxData, data);
-    ctx.success({
-      data: userList
     })
   } catch (e) {
     Logger.error(e.stack);
@@ -233,7 +173,7 @@ const update = async (_ctx) => {
   };
   try {
     await ctxData.start(false);
-    await UserService.update(ctxData, data);
+    await ProjectService.update(ctxData, data);
     ctx.response.body = {
       success: true,
       msg: "操作成功",
@@ -264,7 +204,7 @@ const deleteApi = async (_ctx) => {
   };
   try {
     await ctxData.start(false);
-    await UserService.deleteApi(ctxData, data);
+    await ProjectService.deleteApi(ctxData, data);
     ctx.response.body = {
       success: true,
       msg: "操作成功",
@@ -285,11 +225,10 @@ const deleteApi = async (_ctx) => {
 
 
 module.exports = {
-  register,
+  insert,
   login,
-  userInfo,
+  projectList,
   update,
   deleteApi,
-  logout,
-  findAllByProject
+  logout
 };

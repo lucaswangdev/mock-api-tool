@@ -2,13 +2,13 @@ import { insert } from '@/services/mockService';
 import { PageContainer } from '@ant-design/pro-components';
 import CodeEditor from '@/components/CodeEditor';
 import FormInput from '@/components/FormInput';
-
 import {
   Button,
   message,
 } from 'antd';
 import React, { useRef, useState } from 'react';
 import './index.less';
+import { useModel } from 'umi';
 
 /**
  * 主页
@@ -17,6 +17,7 @@ const IndexPage: React.FC = () => {
   const [currentEditCode, setcurrentEditCode] = useState<any>('');
   const [editorActionList, setEditorActionList] = useState<any>([]);
   const formInputRef: any = useRef();
+  const { initialState, setInitialState } = useModel('@@initialState');
 
   /**
    * 编辑器内容发送了变化
@@ -50,7 +51,8 @@ const IndexPage: React.FC = () => {
         apiPath: values.apiPath,
         delay: values.delay || 0,
         apiDescription: values.apiDescription || '',
-        apiContent: currentEditCode
+        apiContent: currentEditCode,
+        projectCode: initialState?.currentProjet?.projectCode
       });
       message.success('保存成功');
     } catch (e: any) {

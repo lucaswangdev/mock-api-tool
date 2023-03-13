@@ -140,3 +140,17 @@ export async function getLoginUser() {
     method: 'GET',
   });
 }
+
+/**
+ * 创建用户
+ * @param params
+ */
+export async function findAllByProject(params: UserType.UserQueryRequest) {
+  return request<BaseResponse<number>>('/user/findAllByProject', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: params,
+  });
+}

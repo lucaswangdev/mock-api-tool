@@ -5,13 +5,16 @@ import { RunTimeLayoutConfig } from '@@/plugin-layout/types';
 import type { RequestConfig } from 'umi';
 import './global.less';
 import RightContent from '@/components/GlobalHeader/RightContent';
+import { message } from 'antd';
 
 /**
  * 全局初始化数据配置，用于 Layout 用户信息和权限初始化
  * 更多信息见文档：https://next.umijs.org/docs/api/runtime-config#getinitialstate
  */
-export async function getInitialState(): Promise<InitialState> {
-  return {};
+export async function getInitialState() {
+  return {
+    currentProjet: {}
+  };
 }
 
 /**
@@ -77,6 +80,9 @@ export const request: RequestConfig = {
         // 跳转至登录页
         window.location.href = `/user/login`;
         throw new Error('请先登录');
+      }
+      if(!data.success) {
+        message.error(data.msg || '操作失败，请重试');
       }
       // if (code !== 0) {
       //   console.error(`request error, path = ${path}`, data);

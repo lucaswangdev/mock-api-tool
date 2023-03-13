@@ -11,4 +11,7 @@ module.exports = {
   delete: `
     delete from user where id = #data.id
     `,
+  findAllByProject: `
+    select id, userName, userAccount from user WHERE id in (SELECT userId from project_user WHERE projectCode = #data.projectCode)
+  `,
 };

@@ -10,7 +10,7 @@
     "start": "npm run dev"
   },
   "dependencies": {
-    "@ant-design/icons": "^4.7.0",
+    "@ant-design/icons": "^4.8.0",
     "@ant-design/pro-components": "^2.3.13",
     "@umijs/max": "^4.0.9",
     "antd": "^4.23.3",

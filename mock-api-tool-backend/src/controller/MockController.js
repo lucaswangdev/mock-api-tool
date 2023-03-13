@@ -11,6 +11,7 @@ const insert = async (_ctx) => {
   let ctxData = new CtxData(_ctx);
   let ctx = ctxData.ctx;
   const resBody = ctx.request.body;
+  const { projectCode } = resBody;
   const { userId } = ctx.state.user;
   const data = {
     api_path: resBody.apiPath,
@@ -21,7 +22,8 @@ const insert = async (_ctx) => {
     api_description: resBody.apiDescription
       ? resBody.apiDescription
       : "",
-    userId
+    userId,
+    projectCode
   };
   try {
     await ctxData.start(false);
@@ -49,7 +51,8 @@ const update = async (_ctx) => {
   let ctxData = new CtxData(_ctx);
   let ctx = ctxData.ctx;
   const resBody = ctx.request.body;
-  const { userId } = ctx.state.user;
+  const { projectCode } = resBody;
+  // const { userId } = ctx.state.user;
   const data = {
     id: resBody.id,
     api_path: resBody.apiPath ? resBody.apiPath : "",
@@ -58,7 +61,8 @@ const update = async (_ctx) => {
     api_description: resBody.apiDescription
       ? resBody.apiDescription
       : "",
-    userId
+    // userId,
+    projectCode
   };
   try {
     await ctxData.start(false);
@@ -86,10 +90,11 @@ const findById = async (_ctx) => {
   let ctxData = new CtxData(_ctx);
   let ctx = ctxData.ctx;
   const resBody = ctx.request.body;
-  const { userId } = ctx.state.user;
+  const { projectCode } = resBody;
+  // const { userId } = ctx.state.user;
   const data = {
     id: resBody.id,
-    userId
+    projectCode
   };
   try {
     await ctxData.start(false);
@@ -118,10 +123,10 @@ const deleteApi = async (_ctx) => {
   let ctxData = new CtxData(_ctx);
   let ctx = ctxData.ctx;
   const resBody = ctx.request.body;
-  const { userId } = ctx.state.user;
+  const { projectCode } = resBody;
   const data = {
     id: resBody.id,
-    userId
+    projectCode
   };
   try {
     await ctxData.start(false);
@@ -149,9 +154,10 @@ const findAll = async (_ctx) => {
   let ctxData = new CtxData(_ctx);
   let ctx = ctxData.ctx;
   const resBody = ctx.request.body;
+  const { projectCode } = resBody;
   const { userId } = ctx.state.user;
   const data = {
-    userId
+    projectCode
   };
   try {
     await ctxData.start(false);
@@ -180,21 +186,12 @@ const findAll = async (_ctx) => {
 const all = async (_ctx) => {
   let ctxData = new CtxData(_ctx);
   let ctx = ctxData.ctx;
-  let { repositoryId, url } = ctx.params;
+  let { projectCode, url } = ctx.params;
   const resBody = ctx.request.body;
-  const { userId } = ctx.state.user;
   const { pageNum, pageSize } = resBody;
-  if(!userId) {
-   ctx.fail({
-      data: {
-        msg: "not found Authorization token"
-      }
-    })
-    return;
-  }
   const data = {
     api_path: url,
-    userId
+    projectCode
   };
   try {
     await ctxData.start(false);

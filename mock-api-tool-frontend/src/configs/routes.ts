@@ -4,8 +4,19 @@
  */
 export default [
   {
-    name: '接口列表',
+    name: '项目列表',
     path: '/',
+    component: 'project/list',
+  },
+  {
+    name: '项目列表',
+    path: '/project/manage',
+    component: 'project/manage',
+    hideInMenu: true,
+  },
+  {
+    name: '接口列表',
+    path: '/index',
     component: 'index',
   },
   {
@@ -32,8 +43,10 @@ export default [
   },
 ];
 
+const isDev = process.env.NODE_ENV === 'development';
+
 // 查看mock接口 basePath
-export const mockApiBasePath = "http://localhost:4000/mock";
+export const mockApiBasePath =  isDev ? "http://localhost:4000/api/mock" : '/api/mock';
 
 // e.g.
 // export const routes: IBestAFSRoute[] = [

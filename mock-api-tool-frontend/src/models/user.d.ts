@@ -96,5 +96,6 @@ declare namespace UserType {
     userRole?: string;
     createTime?: Date;
     updateTime?: Date;
+    projectCode?: string;
   }
 }

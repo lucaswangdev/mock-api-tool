@@ -2,6 +2,7 @@ old-versions/v1/node_modules
 old-versions/v2/node_modules
 
 mock-api-tool-backend/node_modules
+mock-api-tool-backend/package-lock.json
 mock-api-tool-frontend/node_modules
 
 .idea

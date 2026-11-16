@@ -39,7 +39,8 @@ pool.on('connection', () => {
  * get connection
  */
 const getPoolConnection = async () => {
-  const connection = await pool.getConnection(async conn => conn);
+  // mysql2 v3 promise pool 的 getConnection() 不接受回调参数，直接 await 即可
+  const connection = await pool.getConnection();
   return connection;
 }
 
